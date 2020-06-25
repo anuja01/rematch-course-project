@@ -24,8 +24,12 @@ In Rematch each state is controlled by a Model. Models will be places inside the
 
 # Configuring the store.  
 ```
-import { init } from "@rematch/core";
-
+import { initl, RematchRootState, RematchDispatch} from "@rematch/core";
+/**
+These are inbuild types for state and dispatch
+RematchRootState
+RematchDispatch
+*/
 const models = {};
 
 // init method accepts a configuration object
@@ -37,3 +41,32 @@ const store = init({
 export default store;
 ```
 
+# Models   
+Model is a Rematch abstraction that hides smaller details of `redux` (Action types, Action creators, Reducers with switch statement)    
+Instead of matching with string based names (Action types), rematch uses <b>named reducer function</b> for every action    
+It's good practice to have separate files for models as they can become quiet big   
+
+example:   
+```
+// this model goes to Rematch init({})
+const model = {
+  state: [] as State, // initial state
+  reducers: { // named reducer functions, call them by name instead of by Action type which redux does
+    loaded: (state: State, payload: ReadonlyArray<User>) => payload,
+    followToggled: (state: State, payload: User) =>
+      state.map(user => {
+        if (user.id === payload.id) {
+          return {
+            ...user,
+            isFollowing: !user.isFollowing
+          };
+        }
+        return user;
+      })
+  }
+};
+```
+
+Then connect this model to a component and use model values (connected components)
+
+### Check how types are defined for state and dispatch. !!!Important

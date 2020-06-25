@@ -1,0 +1,22 @@
+import { User } from "../common/types";
+
+type State = ReadonlyArray<User>;
+
+const model = {
+  state: [] as State, // initial state
+  reducers: { // named reducer functions, call them by name instead of by Action type which redux does
+    loaded: (state: State, payload: ReadonlyArray<User>) => payload,
+    followToggled: (state: State, payload: User) =>
+      state.map(user => {
+        if (user.id === payload.id) {
+          return {
+            ...user,
+            isFollowing: !user.isFollowing
+          };
+        }
+        return user;
+      })
+  }
+};
+
+export default model;
