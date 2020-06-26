@@ -2,13 +2,12 @@ import React, { useEffect, FC } from "react";
 import { connect } from "react-redux";
 import UserList from "../../components/UserList";
 import { RootState, RootDispatch } from "../../store";
-import allUsers from "../../common/users";
 
 type UsersProps = ReturnType<typeof mapProps> & ReturnType<typeof mapDispatch>;
 
-const Users: FC<UsersProps> = ({ users, loaded, followToggled }) => {
+const Users: FC<UsersProps> = ({ users, load, followToggled }) => {
   useEffect(() => {
-    loaded(allUsers);
+    load();
   }, []);
   return <UserList toggleFollow={followToggled} users={users} />;
 };
@@ -17,7 +16,7 @@ const mapProps = (state: RootState) => ({
   users: state.users
 });
 const mapDispatch = (dispatch: RootDispatch) => ({
-  loaded: dispatch.users.loaded,
+  load: dispatch.users.load,
   followToggled: dispatch.users.followToggled
 });
 

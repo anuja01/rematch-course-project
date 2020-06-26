@@ -12,7 +12,7 @@ Good read: https://diophant.com/blog/making-redux-more-accessible-with-rematch-f
 
 You can find complete video course on [Youtube](https://www.youtube.com/playlist?list=PLNG2YBDrzK-w1VSeDpMxdGwkb4L6hDy8Z)
 
-# Advantages of Rematch   
+## Advantages of Rematch   
 1. Removes unwanted redux boilerplate codes (no need of action types, action creators, reducers with switch)   
 2. Out of the box support for side effects (not necessary to use saga, thunk)   
    
@@ -22,7 +22,7 @@ Good read: https://diophant.com/blog/making-redux-more-accessible-with-rematch-f
 Store is a Javascript object which holds applications global state.   
 In Rematch each state is controlled by a Model. Models will be places inside the store.   
 
-# Configuring the store.  
+## Configuring the store.  
 ```
 import { initl, RematchRootState, RematchDispatch} from "@rematch/core";
 /**
@@ -41,7 +41,7 @@ const store = init({
 export default store;
 ```
 
-# Models   
+## Models   
 Model is a Rematch abstraction that hides smaller details of `redux` (Action types, Action creators, Reducers with switch statement)    
 Instead of matching with string based names (Action types), rematch uses <b>named reducer function</b> for every action    
 It's good practice to have separate files for models as they can become quiet big   
@@ -70,3 +70,12 @@ const model = {
 Then connect this model to a component and use model values (connected components)
 
 ### Check how types are defined for state and dispatch. !!!Important
+
+## Side effects with Rematch
+- Reducers are pure functions. Can't have side effects.   
+- Side effects are executed before calling pure reducer functions.   
+(Thunk is used for that purpose)    
+### - Rematch has built in support for side effects, so no need of additional libraries   
+Model contains a property called `effects`. It is an object with each property represent a single effect   
+
+
